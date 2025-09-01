@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+.custom-swiper .swiper-pagination {
+  margin-top: 30px;
+  position: relative;
+}
+
+:root {
+  --accent: #da9eff; /* pink */
+  --accent-muted: #f6eafe;
+  --primary: #ffffff; /* white */
+  --primary-muted: #f3f4f6; /* gray */
+  --secondary: #393939;
+  --secondary-muted: #6b7280;
+}
+
+@theme {
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+  --color-primary: var(--primary);
+  --color-primary-muted: var(--primary-muted);
+  --color-secondary: var(--secondary);
+  --color-secondary-muted: var(--secondary-muted);
+}
