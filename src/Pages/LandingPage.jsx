@@ -1,25 +1,27 @@
 import React from "react";
-import Navbar from "./Navbar";
-import headphone from "../../assets/landingPageImages/headphone.png";
-import Subtract1 from "../../assets/landingPageImages/Subtract1.png";
-import Subtract2 from "../../assets/landingPageImages/Subtract2.png";
-import Subtract3 from "../../assets/landingPageImages/Subtract3.png";
-import placeholder from "../../assets/landingPageImages/placeholder.png";
-import Frame from "../../assets/landingPageImages/Frame.png";
-import Robot from "../../assets/landingPageImages/Robot.png";
-import Box, { FooterBox } from "./Box";
-import Footer from "./Footer";
-import Slider from "./Slider";
+import headphone from "../assets/landingPageImages/headphone.png";
+import Subtract1 from "../assets/landingPageImages/Subtract1.png";
+import Subtract2 from "../assets/landingPageImages/Subtract2.png";
+import Subtract3 from "../assets/landingPageImages/Subtract3.png";
+import placeholder from "../assets/landingPageImages/placeholder.png";
+import Frame from "../assets/landingPageImages/Frame.png";
+import Robot from "../assets/landingPageImages/Robot.png";
+import Navbar from "../components/layout/Navbar";
+import Box from "../components/layout/Box";
+import Slider from "../components/layout/Slider";
+import Footer from "../components/layout/Footer";
+import { FooterBox } from "../components/layout/FooterBox";
+import Button from "../components/common/Button";
 
 function LandingPage() {
   return (
     <div className="max-w-[1920px] overflow-x-hidden">
       <div className="bg-primary-muted px-5 sm:px-20 md:px-20">
         <div className="mx-auto px-6 py-10">
-          <div>
+          {/* <div>
             <Navbar />
             <hr className="my-3 md:my-23 lg:my-6 border-secondary-muted" />
-          </div>
+          </div> */}
           <div className="flex flex-col-reverse md:flex-row items-center justify-between py-12 md:py-20 gap-10">
             <div className="flex-1 lg:pr-12 text-center md:text-left text-secondary">
               <p className="text-3xl sm:text-3xl md:text-3xl lg:text-6xl font-bold pb-4 md:pb-6">
@@ -28,13 +30,8 @@ function LandingPage() {
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl pb-6 md:pb-8 text-secondary">
                 AI-driven, always available, and tailored to your show.
               </p>
-              <button
-                className="bg-accent text-secondary font-semibold rounded-full 
-            px-6 py-3 sm:px-8 sm:py-4 md:px-6 md:py-2 
-            text-sm sm:text-base md:text-lg lg:text-xl border-b-2"
-              >
-                Get Started
-              </button>
+
+              <Button label={"Get Started"} />
             </div>
             <div className="flex-1 max-w-sm md:max-w-md lg:max-w-lg">
               <img src={headphone} alt="headphone" className="w-full h-auto" />
@@ -56,9 +53,7 @@ function LandingPage() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
-          <button className="bg-accent text-secondary font-semibold text-sm sm:text-base rounded-full px-5 sm:px-6 py-2.5 sm:py-3  border-b-2">
-            Learn more
-          </button>
+          <Button label={"Learn more"} />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -87,9 +82,8 @@ function LandingPage() {
             deserunt nihil? Sit, enim. Cupiditate facere qui recusandae hic nisi
             eos pariatur laudantium delectus ullam molestias?
           </p>
-          <button className="bg-accent text-secondary font-semibold text-xs sm:text-sm lg:text-base rounded-full px-5 sm:px-6 lg:px-8 py-2.5 sm:py-3 border-b-2">
-            Try now for free
-          </button>
+
+          <Button label={"Try now for free"} />
         </div>
 
         <div className="flex-1 max-w-sm sm:max-w-md lg:max-w-xl relative rounded-2xl p-[4px] sm:p-[6px] bg-gradient-to-r from-secondary to-accent shadow-lg">
@@ -117,9 +111,7 @@ function LandingPage() {
             at?
           </p>
           <div>
-            <button className="bg-accent text-secondary font-semibold text-sm rounded-full px-6 py-3 border-b-2">
-              Learn more
-            </button>
+            <Button label={"Learn more"} />
           </div>
 
           <Slider />
@@ -147,9 +139,7 @@ function LandingPage() {
               harum ea fuga deleniti accusamus iste reiciendis velit enim!
               AI-driven, always available, and tailored to your show.
             </p>
-            <button className="bg-accent text-secondary font-semibold text-sm sm:text-base rounded-full px-5 sm:px-6 lg:px-8 py-2.5 sm:py-3 border-b-2">
-              Learn More
-            </button>
+            <Button label={"Learn More"} />
           </div>
         </div>
       </div>
