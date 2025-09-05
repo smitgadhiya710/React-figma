@@ -15,7 +15,7 @@ import {
 import Loader from "../components/common/Loader";
 
 export default function AddOrEditPodcast() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const [createPodcast, { isLoading, isSuccess, isError }] =
@@ -48,16 +48,16 @@ export default function AddOrEditPodcast() {
 
     onSubmit: async (values, { resetForm }) => {
       try {
-        if (id) {
+        if (slug) {
           // update
           await updatePodcast({
             resource: "podcast",
-            id,
+            id: slug,
             data: values,
             tag: TAG_TYPES.GET_ALL_PODCAST,
           }).unwrap();
           toast.success("Podcast updated successfully!");
-        } else if (!id) {
+        } else if (!slug) {
           // create flow
           await createPodcast({
             resource: "podcast",
@@ -78,7 +78,7 @@ export default function AddOrEditPodcast() {
     try {
       const result = await getPodcastById({
         resource: "podcast",
-        id,
+        id: slug,
         tag: TAG_TYPES.GET_PODCAST_BY_ID,
       }).unwrap();
     } catch (err) {
@@ -87,10 +87,10 @@ export default function AddOrEditPodcast() {
   }
 
   useEffect(() => {
-    if (id) {
+    if (slug) {
       handlePodcastById();
     }
-  }, [id]);
+  }, [slug]);
 
   return (
     <div>
@@ -100,7 +100,7 @@ export default function AddOrEditPodcast() {
         </div>
 
         <div className="mx-auto text-secondary text-3xl font-semibold">
-          {id ? "Edit" : "Add"} Podcast
+          {slug ? "Edit" : "Add"} Podcast
         </div>
       </div>
 
@@ -253,7 +253,7 @@ export default function AddOrEditPodcast() {
 
           <div className="flex gap-2 justify-end">
             <Button label={"Cancle"} onClick={() => navigate("/podcast")} />
-            <Button type={"submit"} label={id ? "Update" : "Submit"} />
+            <Button type={"submit"} label={slug ? "Update" : "Submit"} />
           </div>
         </form>
       )}

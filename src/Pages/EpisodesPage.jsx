@@ -48,8 +48,7 @@ function EpisodesPage() {
                 duration={i.duration}
                 releaseDate={i.releaseDate}
                 createdAt={i.createdAt}
-                editEpisodeId={i._id}
-                deleteEpisodeId={i._id}
+                slug={i.slug}
               />
             </div>
           ))}

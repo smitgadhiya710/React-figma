@@ -18,10 +18,10 @@ function App() {
         <Route path="/home" element={<LandingPage />} />
         <Route path="/podcast" element={<PodcastPage />} />
         <Route path="/podcast/new" element={<AddOrEditPodcast />} />
-        <Route path="/podcast/:id" element={<AddOrEditPodcast />} />
+        <Route path="/podcast/:slug" element={<AddOrEditPodcast />} />
         <Route path="/episodes" element={<EpisodesPage />} />
         <Route path="/episodes/new" element={<AddOrEditEpisode />} />
-        <Route path="/episodes/:id" element={<AddOrEditEpisode />} />
+        <Route path="/episodes/:slug" element={<AddOrEditEpisode />} />
         {/* <Route path="/template" element={<TemplatePage />} /> */}
       </Routes>
     </div>

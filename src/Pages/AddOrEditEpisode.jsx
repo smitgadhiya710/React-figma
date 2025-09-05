@@ -15,7 +15,7 @@ import Button from "../components/common/Button";
 import toast from "react-hot-toast";
 
 function AddOrEditEpisode() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const [createEpisode, { isLoading, isSuccess, isError }] =
@@ -47,16 +47,16 @@ function AddOrEditEpisode() {
 
     onSubmit: async (values) => {
       try {
-        if (id) {
+        if (slug) {
           // update
           await updateEpisode({
             resource: "episode",
-            id,
+            id: slug,
             data: values,
             tag: TAG_TYPES.GET_ALL_EPISODE,
           }).unwrap();
           toast.success("Episode updated successfully!");
-        } else if (!id) {
+        } else if (!slug) {
           // create flow
           await createEpisode({
             resource: "episode",
@@ -77,7 +77,7 @@ function AddOrEditEpisode() {
     try {
       const result = await getEpisodeById({
         resource: "episode",
-        id,
+        id: slug,
         tag: TAG_TYPES.GET_EPISODE_BY_ID,
       }).unwrap();
     } catch (err) {
@@ -86,10 +86,10 @@ function AddOrEditEpisode() {
   }
 
   useEffect(() => {
-    if (id) {
+    if (slug) {
       handleEpisodeById();
     }
-  }, [id]);
+  }, [slug]);
 
   return (
     <div>
@@ -99,7 +99,7 @@ function AddOrEditEpisode() {
         </div>
 
         <div className="mx-auto text-secondary text-3xl font-semibold">
-          {id ? "Edit" : "Add"} Episode
+          {slug ? "Edit" : "Add"} Episode
         </div>
       </div>
 
@@ -139,7 +139,7 @@ function AddOrEditEpisode() {
               EpisodeNum
             </label>
             <input
-              type="text"
+              type="number"
               name="episodeNum"
               value={values.episodeNum}
               onChange={handleChange}
@@ -231,7 +231,7 @@ function AddOrEditEpisode() {
 
           <div className="flex gap-2 justify-end">
             <Button label={"Cancle"} onClick={() => navigate("/episodes")} />
-            <Button type={"submit"} label={id ? "Update" : "Submit"} />
+            <Button type={"submit"} label={slug ? "Update" : "Submit"} />
           </div>
         </form>
       )}

@@ -53,6 +53,7 @@ export default function PodcastPage() {
                 createdAt={i.createdAt}
                 editPodcastId={i._id}
                 deletePodcastId={i._id}
+                slug={i.slug}
               />
             </div>
           ))}

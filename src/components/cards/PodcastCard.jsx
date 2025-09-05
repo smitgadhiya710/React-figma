@@ -16,6 +16,7 @@ export default function PodcastCard({
   createdAt,
   editPodcastId,
   deletePodcastId,
+  slug,
 }) {
   const navigate = useNavigate();
   const [deletePodcast, { isSuccess, isError }] = useDeleteMutation();
@@ -24,7 +25,7 @@ export default function PodcastCard({
     try {
       await deletePodcast({
         resource: `podcast`,
-        id: deletePodcastId,
+        id: slug,
         tag: TAG_TYPES.GET_ALL_PODCAST,
       }).unwrap();
       toast.success("Podcast Deleted successfully!");
@@ -59,7 +60,7 @@ export default function PodcastCard({
         <div className="flex gap-3 items-center justify-end">
           <MdEdit
             title="Edit"
-            onClick={() => navigate(`/podcast/${editPodcastId}`)}
+            onClick={() => navigate(`/podcast/${slug}`)}
             size={20}
             className="text-blue-500 cursor-pointer"
           />

@@ -12,8 +12,7 @@ export default function EpisodeCard({
   duration,
   releaseDate,
   createdAt,
-  editEpisodeId,
-  deleteEpisodeId,
+  slug,
 }) {
   const navigate = useNavigate();
   const [deleteEpisode] = useDeleteMutation();
@@ -22,7 +21,7 @@ export default function EpisodeCard({
     try {
       await deleteEpisode({
         resource: `episode`,
-        id: deleteEpisodeId,
+        id: slug,
         tag: TAG_TYPES.GET_ALL_EPISODE,
       }).unwrap();
       toast.success("Episode deleted successfully!");
@@ -55,7 +54,7 @@ export default function EpisodeCard({
         <div className="flex gap-3 items-center justify-end">
           <MdEdit
             title="Edit"
-            onClick={() => navigate(`/episodes/${editEpisodeId}`)}
+            onClick={() => navigate(`/episodes/${slug}`)}
             size={20}
             className="text-blue-500 cursor-pointer"
           />
