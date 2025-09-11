@@ -6,12 +6,22 @@ import { IoMdClose } from "react-icons/io";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import { myContext } from "../../context/ContextProvider";
+import { useLogoutMutation } from "../../feature/authSlice";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { searchPodcast, setSearchPodcast } = useContext(myContext);
+  const [logout] = useLogoutMutation();
+
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  function handleLogout() {
+    logout({ token });
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
 
   return (
     <nav className="max-w-screen bg-primary-muted px-4 py-2 md:py-7 sm:px-6 lg:px-10">
@@ -81,7 +91,11 @@ function Navbar() {
               className="flex-1 px-2 text-secondary bg-transparent border-secondary-muted focus:outline-none text-sm"
             />
           </div>
-          <Button label={"Subscribe"} />
+          {token ? (
+            <Button label={"logout"} onClick={() => handleLogout()} />
+          ) : (
+            <Button label={"Subscribe"} onClick={() => navigate("/login")} />
+          )}
         </div>
 
         <button
@@ -96,6 +110,7 @@ function Navbar() {
         <div className="flex flex-col gap-4 mt-4 md:hidden">
           <Link
             to="/home"
+            onClick={() => setMenuOpen(!menuOpen)}
             className={`transition-colors ${
               location.pathname.startsWith("/home")
                 ? "text-accent"
@@ -106,6 +121,7 @@ function Navbar() {
           </Link>
           <Link
             to="/podcast"
+            onClick={() => setMenuOpen(!menuOpen)}
             className={`transition-colors ${
               location.pathname.startsWith("/podcast")
                 ? "text-accent"
@@ -116,6 +132,7 @@ function Navbar() {
           </Link>
           <Link
             to="/episodes"
+            onClick={() => setMenuOpen(!menuOpen)}
             className={`transition-colors ${
               location.pathname.startsWith("/episodes")
                 ? "text-accent"
@@ -126,6 +143,7 @@ function Navbar() {
           </Link>
           <Link
             to="/template"
+            onClick={() => setMenuOpen(!menuOpen)}
             className={`transition-colors ${
               location.pathname.startsWith("/template")
                 ? "text-accent"
@@ -151,7 +169,12 @@ function Navbar() {
             />
           </div>
 
-          <Button label={"Subscibe"} />
+          <Button
+            label={"Subscibe"}
+            onClick={() => {
+              setMenuOpen(!menuOpen), navigate("/login");
+            }}
+          />
         </div>
       )}
     </nav>

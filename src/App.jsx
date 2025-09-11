@@ -5,6 +5,8 @@ import PodcastPage from "./Pages/PodcastPage";
 import AddOrEditPodcast from "./Pages/AddOrEditPodcast";
 import EpisodesPage from "./Pages/EpisodesPage";
 import AddOrEditEpisode from "./Pages/AddOrEditEpisode";
+import Login from "./Pages/auth/Login";
+import Registration from "./Pages/auth/Registration";
 // import TemplatePage from "./Pages/TemplatePage";
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
       <hr className="border-secondary-muted md:mt-15 lg:mt-0" />
 
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/registartion" element={<Registration />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<LandingPage />} />
         <Route path="/podcast" element={<PodcastPage />} />

@@ -1,10 +1,11 @@
-import React from "react";
+import { React, useState } from "react";
 import { useDeleteMutation } from "../../feature/apiSlice";
 import { TAG_TYPES } from "../../feature/tagType";
 import toast from "react-hot-toast";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../common/ConfirmationModal";
 
 export default function PodcastCard({
   title,
@@ -20,6 +21,7 @@ export default function PodcastCard({
 }) {
   const navigate = useNavigate();
   const [deletePodcast, { isSuccess, isError }] = useDeleteMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function handleDeletePodcast() {
     try {
@@ -31,11 +33,13 @@ export default function PodcastCard({
       toast.success("Podcast Deleted successfully!");
     } catch (err) {
       toast.error(err?.data?.message || "Something went wrong");
+    } finally {
+      setIsModalOpen(false);
     }
   }
 
   return (
-    <div className="bg-white shadow-md rounded-2xl p-6 max-w-md hover:shadow-lg transition duration-300">
+    <div className="bg-primary h-full shadow-md rounded-2xl p-6 max-w-md hover:shadow-lg transition duration-300 flex flex-col">
       <h2 className="text-xl font-bold text-gray-800 mb-2">{title}</h2>
 
       <p className="text-gray-600 mb-4 line-clamp-2">{description}</p>
@@ -55,7 +59,7 @@ export default function PodcastCard({
         </p>
       </div>
 
-      <div className="flex text-xs text-secondary-muted items-center justify-between">
+      <div className="flex text-xs text-secondary-muted items-center justify-between mt-auto">
         Created At: {new Date(createdAt).toLocaleDateString()}
         <div className="flex gap-3 items-center justify-end">
           <MdEdit
@@ -66,9 +70,15 @@ export default function PodcastCard({
           />
           <MdDelete
             title="Delete"
-            onClick={() => handleDeletePodcast()}
+            onClick={() => setIsModalOpen(true)}
             size={20}
             className="text-red-600 cursor-pointer"
+          />
+          <ConfirmationModal
+            isOpen={isModalOpen}
+            message="Are you sure you want to delete this Episode ?"
+            onConfirm={() => handleDeletePodcast()}
+            onCancel={() => setIsModalOpen(false)}
           />
         </div>
       </div>

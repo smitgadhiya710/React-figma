@@ -1,22 +1,32 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { TAG_TYPES } from "./tagType";
+import { baseQueryWithReauth } from "./reAuthenticate";
+
+function prepareHeaders(headers) {
+  const token = JSON.parse(localStorage.getItem("token"));
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+  headers.set("Content-Type", "application/json");
+  return headers;
+}
 
 export const api = createApi({
+  // reducerPath: "api",
+  // baseQuery: fetchBaseQuery({
+  //   baseUrl: import.meta.env.VITE_API_BASE_URL,
+  //   credentials: "include",
+  //   prepareHeaders: prepareHeaders,
+  // }),
+
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_BASE_URL }),
+  baseQuery: baseQueryWithReauth,
 
   tagTypes: Object.values(TAG_TYPES),
   endpoints: (builder) => ({
-    // getAll: builder.query({
-    //   query: ({ resource }) => `/${resource}`,
-    //   providesTags: (result, error, { resource, tag }) => [
-    //     { type: tag, id: resource },
-    //   ],
-    // }),
-
     getAll: builder.query({
       query: ({ resource, search }) => {
-        let url = `/${resource}`;
+        let url = `api/${resource}`;
         if (search) {
           url += `?search=${search}`;
         }
@@ -28,7 +38,7 @@ export const api = createApi({
     }),
 
     getById: builder.query({
-      query: ({ resource, id }) => `/${resource}/${id}`,
+      query: ({ resource, id }) => `api/${resource}/${id}`,
       providesTags: (result, error, { resource, id, tag }) => [
         { type: tag, id: `${resource}-${id}` },
       ],
@@ -36,7 +46,7 @@ export const api = createApi({
 
     create: builder.mutation({
       query: ({ resource, data }) => ({
-        url: `/${resource}`,
+        url: `api/${resource}`,
         method: "POST",
         body: data,
       }),
@@ -47,7 +57,7 @@ export const api = createApi({
 
     update: builder.mutation({
       query: ({ resource, id, data }) => ({
-        url: `/${resource}/${id}`,
+        url: `api/${resource}/${id}`,
         method: "PUT",
         body: data,
       }),
@@ -59,7 +69,7 @@ export const api = createApi({
 
     delete: builder.mutation({
       query: ({ resource, id }) => ({
-        url: `/${resource}/${id}`,
+        url: `api/${resource}/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result, error, { resource, tag }) => [

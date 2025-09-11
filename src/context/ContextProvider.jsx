@@ -4,6 +4,7 @@ export const myContext = createContext();
 
 function ContextProvider({ children }) {
   const [searchPodcast, setSearchPodcast] = useState("");
+  const [loggedUserData, setLoggedUserData] = useState();
 
   return (
     <div>
