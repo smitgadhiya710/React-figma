@@ -2,11 +2,13 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 function prepareHeaders(headers) {
   const token = JSON.parse(localStorage.getItem("token"));
+  const refreshtoken = JSON.parse(localStorage.getItem("refreshtoken"));
 
-  if (token) {
+  if (token || refreshtoken) {
     headers.set("Authorization", `Bearer ${token}`);
   }
   headers.set("Content-Type", "application/json");
+  headers.set("refreshtoken", refreshtoken);
   return headers;
 }
 
@@ -26,9 +28,16 @@ export const baseQueryWithReauth = async (args, api) => {
     );
 
     if (refreshResult.data) {
-      const newToken = refreshResult.data.data.accessToken;
-
-      localStorage.setItem("token", JSON.stringify(newToken));
+      const newToken = refreshResult.data.data;
+      console.log(newToken);
+      localStorage.setItem(
+        "token",
+        JSON.stringify(refreshResult.data.data.accessToken)
+      );
+      localStorage.setItem(
+        "refreshtoken",
+        JSON.stringify(refreshResult.data.data.refreshToken)
+      );
 
       result = await rawBaseQuery(args, api);
     } else {

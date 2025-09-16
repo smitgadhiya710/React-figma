@@ -1,7 +1,13 @@
 import React from "react";
 import Button from "./Button";
 
-const ConfirmationModal = ({ isOpen, message, onConfirm, onCancel }) => {
+const ConfirmationModal = ({
+  isOpen,
+  message,
+  onConfirm,
+  onCancel,
+  btnTitle = "Confirm",
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -17,7 +23,7 @@ const ConfirmationModal = ({ isOpen, message, onConfirm, onCancel }) => {
           />
 
           <Button
-            label={"Confirm"}
+            label={btnTitle}
             onClick={onConfirm}
             className="px-4 py-2 border-b-neutral-900 bg-red-500 text-white rounded-lg"
           />
