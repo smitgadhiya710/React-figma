@@ -35,7 +35,7 @@ function Login() {
 
         resetForm();
         toast.success("Login successfully");
-        navigate("/episodes");
+        navigate("/podcast");
       } catch (err) {
         toast.error(err?.data?.message || "Something went wrong");
       }
@@ -104,7 +104,7 @@ function Login() {
         <p className="flex pt-4 gap-1 text-secondary-muted">
           Don't have an account ?
           <Link
-            to="/registartion"
+            to="/registration"
             className={"transition-colors hover:text-accent text-secondary"}
           >
             Register
