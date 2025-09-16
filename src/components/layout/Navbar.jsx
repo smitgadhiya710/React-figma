@@ -7,20 +7,29 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import { myContext } from "../../context/ContextProvider";
 import { useLogoutMutation } from "../../feature/authSlice";
+import ConfirmationModal from "../common/ConfirmationModal";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { searchPodcast, setSearchPodcast } = useContext(myContext);
-  const [logout] = useLogoutMutation();
+  const [userLogout] = useLogoutMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const token = JSON.parse(localStorage.getItem("token"));
 
-  function handleLogout() {
-    logout({ token });
-    localStorage.removeItem("token");
-    navigate("/login");
+  function handleButtone(val) {
+    if (val === "subscribe") {
+      navigate("/login");
+    }
+
+    if (val === "logout") {
+      userLogout({ token });
+      localStorage.removeItem("token");
+      setIsModalOpen(false);
+      navigate("/login");
+    }
   }
 
   return (
@@ -91,11 +100,13 @@ function Navbar() {
               className="flex-1 px-2 text-secondary bg-transparent border-secondary-muted focus:outline-none text-sm"
             />
           </div>
-          {token ? (
-            <Button label={"logout"} onClick={() => handleLogout()} />
-          ) : (
-            <Button label={"Subscribe"} onClick={() => navigate("/login")} />
-          )}
+
+          <Button
+            label={token ? "Logout" : "Subscribe"}
+            onClick={() =>
+              token ? setIsModalOpen(true) : handleButtone("subscribe")
+            }
+          />
         </div>
 
         <button
@@ -177,6 +188,13 @@ function Navbar() {
           />
         </div>
       )}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        btnTitle={"logout"}
+        message="Are you sure you want to logout ?"
+        onConfirm={() => handleButtone("logout")}
+        onCancel={() => setIsModalOpen(false)}
+      />
     </nav>
   );
 }

@@ -25,16 +25,20 @@ export const api = createApi({
   tagTypes: Object.values(TAG_TYPES),
   endpoints: (builder) => ({
     getAll: builder.query({
-      query: ({ resource, search }) => {
+      query: ({ resource, search, params }) => {
         let url = `api/${resource}`;
         if (search) {
           url += `?search=${search}`;
+        }
+        if (params) {
+          url += `?${params}`;
         }
         return url;
       },
       providesTags: (result, error, { resource, tag }) => [
         { type: tag, id: resource },
       ],
+      keepUnusedDataFor: 300, // 5 min
     }),
 
     getById: builder.query({
@@ -42,6 +46,7 @@ export const api = createApi({
       providesTags: (result, error, { resource, id, tag }) => [
         { type: tag, id: `${resource}-${id}` },
       ],
+      keepUnusedDataFor: 300,
     }),
 
     create: builder.mutation({
@@ -81,6 +86,7 @@ export const api = createApi({
 
 export const {
   useGetAllQuery,
+  useLazyGetAllQuery,
   useGetByIdQuery,
   useLazyGetByIdQuery,
   useCreateMutation,
