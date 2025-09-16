@@ -12,6 +12,7 @@ import { podcastCategory, podcastLanguage } from "../enums.js/dropDownValue";
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
 import Loader from "../components/common/Loader";
+import toast from "react-hot-toast";
 
 export default function PodcastPage() {
   const navigate = useNavigate();
@@ -55,9 +56,9 @@ export default function PodcastPage() {
         resource: "podcast",
         tag: TAG_TYPES.GET_ALL_PODCAST,
         params: createParams(reqParams) || null,
-      });
+      }).unwrap();
     } catch (err) {
-      console.error(err);
+      toast.error(err?.data?.message || "Something went wrong");
     }
   }
 
