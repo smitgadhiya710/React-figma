@@ -17,7 +17,10 @@ export default function PodcastPage() {
   const navigate = useNavigate();
   const { searchPodcast } = useContext(myContext);
   const [podcastData, setPodcastData] = useState([]);
-  const [reqParams, setReqParams] = useState({ category: [] });
+  const [reqParams, setReqParams] = useState({
+    category: ["All"],
+    language: "All",
+  });
 
   const [getPodcast, { data: podcast = [], isLoading, isFetching }] =
     useLazyGetAllQuery();
@@ -26,9 +29,7 @@ export default function PodcastPage() {
     let paramsString = "";
 
     Object.entries(obj).forEach(([key, value]) => {
-      if (Array.isArray(value) && value.length > 0) {
-        console.log("VALUE", value.length, value);
-
+      if (Array.isArray(value)) {
         paramsString += `${key}=${value.join(",")}&`;
       } else {
         paramsString += `${key}=${value}&`;

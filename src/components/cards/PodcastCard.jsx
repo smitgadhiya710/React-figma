@@ -15,8 +15,6 @@ export default function PodcastCard({
   author,
   releaseDate,
   createdAt,
-  editPodcastId,
-  deletePodcastId,
   slug,
 }) {
   const navigate = useNavigate();

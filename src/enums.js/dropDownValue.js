@@ -1,4 +1,5 @@
 export const podcastCategory = [
+  "All",
   "Technology",
   "Health",
   "Business",
@@ -8,6 +9,7 @@ export const podcastCategory = [
 ];
 
 export const podcastLanguage = [
+  "All",
   "English",
   "Spanish",
   "French",
